@@ -28,6 +28,7 @@
             style="@style/menu_item_style"
             android:button="@null"
             android:checked="true"
+            android:textColor="@color/black2"
             />
         <RadioButton
             android:id="@+id/rbBoutique"
@@ -36,6 +37,7 @@
             style="@style/menu_item_style"
             android:button="@null"
             android:checked="false"
+            android:textColor="@color/black2"
 
 
             />
@@ -46,6 +48,7 @@
             style="@style/menu_item_style"
             android:button="@null"
             android:checked="false"
+            android:textColor="@color/black2"
             />
 
         <RelativeLayout
@@ -62,6 +65,7 @@
                 style="@style/menu_item_style"
                 android:button="@null"
                 android:checked="false"
+                android:textColor="@color/black2"
 
                 />
             <TextView
@@ -83,6 +87,14 @@
             style="@style/menu_item_style"
             android:button="@null"
             android:checked="false"
+            android:textColor="@color/black2"
             />
     </RadioGroup>
+    <TextView
+        android:layout_above="@id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f36"
+        />
+
 </RelativeLayout>
