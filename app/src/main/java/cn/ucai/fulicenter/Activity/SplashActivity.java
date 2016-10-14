@@ -3,6 +3,8 @@ package cn.ucai.fulicenter.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceActivity;
 
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.utils.MFGT;
@@ -19,21 +21,12 @@ public class SplashActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        new Thread(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                long  start =System.currentTimeMillis();
-                long  costTime =System.currentTimeMillis()-start;
-                if (SLEEP_TIME-costTime>0){
-                    try {
-                        Thread.sleep(SLEEP_TIME-costTime);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                MFGT.startActivity(SplashActivity.this,MainActivity.class);
-                MFGT.finish(SplashActivity.this);
+                MFGT.gotoMainActivity(SplashActivity.this);
+                finish();
             }
-        }).start();
+        },SLEEP_TIME);
     }
 }
