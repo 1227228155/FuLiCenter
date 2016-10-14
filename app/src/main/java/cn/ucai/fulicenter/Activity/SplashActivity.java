@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.utils.MFGT;
 
 public class SplashActivity extends Activity {
     private  static final long  SLEEP_TIME=2000;
@@ -30,8 +31,8 @@ public class SplashActivity extends Activity {
                         e.printStackTrace();
                     }
                 }
-                startActivity(new Intent(SplashActivity.this,MainActivity.class));
-
+                MFGT.startActivity(SplashActivity.this,MainActivity.class);
+                MFGT.finish(SplashActivity.this);
             }
         }).start();
     }
