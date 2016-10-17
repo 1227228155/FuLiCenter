@@ -36,7 +36,14 @@ public class GoodsAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (getItemViewType(position)==I.TYPE_FOOTER){
 
+        }else {
+            GoodsViewHolder vh = (GoodsViewHolder) holder;
+            NewGoodsBean newGoodsBean = mList.get(position);
+            vh.itemGoodsName.setText(newGoodsBean.getGoodsName());
+            vh.itemGoodsPrice.setText(newGoodsBean.getCurrencyPrice());
+        }
     }
 
     @Override
