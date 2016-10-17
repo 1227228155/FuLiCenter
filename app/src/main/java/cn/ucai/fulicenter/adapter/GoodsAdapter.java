@@ -67,7 +67,7 @@ public class GoodsAdapter extends RecyclerView.Adapter {
     }
 
     public void initData(ArrayList<NewGoodsBean> list) {
-        
+
     }
 
     static class FooterViewHolder extends RecyclerView.ViewHolder {
