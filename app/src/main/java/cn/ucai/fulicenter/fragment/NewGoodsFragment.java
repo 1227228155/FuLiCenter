@@ -20,6 +20,8 @@ import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.adapter.GoodsAdapter;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
+import cn.ucai.fulicenter.net.NetDao;
+import cn.ucai.fulicenter.net.OkHttpUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +36,8 @@ public class NewGoodsFragment extends Fragment {
     SwipeRefreshLayout srl;
     GoodsAdapter mAdapter;
     ArrayList<NewGoodsBean> mlist;
+    
+    int pageID =1;
 
     public NewGoodsFragment() {
         // Required empty public constructor
@@ -49,7 +53,22 @@ public class NewGoodsFragment extends Fragment {
         mlist= new ArrayList<>();
         mAdapter = new GoodsAdapter(mContext,mlist);
         initView();
+        initData();
         return layout;
+    }
+
+    private void initData() {
+        NetDao.downloadNewGoods(mContext, pageID, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+            @Override
+            public void onSuccess(NewGoodsBean[] result) {
+
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
     }
 
     private void initView() {
