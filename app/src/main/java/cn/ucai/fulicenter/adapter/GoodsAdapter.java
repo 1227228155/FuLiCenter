@@ -16,6 +16,7 @@ import cn.ucai.fulicenter.Activity.MainActivity;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
+import cn.ucai.fulicenter.utils.ImageLoader;
 
 /**
  * Created by Administrator on 2016/10/17 0017.
@@ -48,6 +49,7 @@ public class GoodsAdapter extends RecyclerView.Adapter {
         }else {
             GoodsViewHolder vh = (GoodsViewHolder) holder;
             NewGoodsBean newGoodsBean = mList.get(position);
+            ImageLoader.downloadImg(mContext,vh.itemGoodsImageView,newGoodsBean.getGoodsThumb());
             vh.itemGoodsName.setText(newGoodsBean.getGoodsName());
             vh.itemGoodsPrice.setText(newGoodsBean.getCurrencyPrice());
         }
@@ -67,7 +69,11 @@ public class GoodsAdapter extends RecyclerView.Adapter {
     }
 
     public void initData(ArrayList<NewGoodsBean> list) {
-
+        if (mList!=null){
+            mList.clear();
+        }
+        mList.addAll(list);
+        notifyDataSetChanged();
     }
 
     static class FooterViewHolder extends RecyclerView.ViewHolder {
