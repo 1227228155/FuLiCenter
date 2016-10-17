@@ -7,10 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.ucai.fulicenter.Activity.MainActivity;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
@@ -22,6 +24,10 @@ import cn.ucai.fulicenter.bean.NewGoodsBean;
 public class GoodsAdapter extends RecyclerView.Adapter {
     Context mContext;
     List<NewGoodsBean> mList;
+
+    public GoodsAdapter(MainActivity mContext, ArrayList<NewGoodsBean> mlist) {
+    }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
