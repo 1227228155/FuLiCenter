@@ -25,9 +25,10 @@ public class GoodsAdapter extends RecyclerView.Adapter {
     Context mContext;
     List<NewGoodsBean> mList;
 
-    public GoodsAdapter(MainActivity mContext, ArrayList<NewGoodsBean> mlist) {
+    public GoodsAdapter(Context mContext, List<NewGoodsBean> mList) {
+        this.mContext = mContext;
+        this.mList = mList;
     }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -63,6 +64,10 @@ public class GoodsAdapter extends RecyclerView.Adapter {
             return I.TYPE_FOOTER;
         }
         return I.TYPE_ITEM;
+    }
+
+    public void initData(ArrayList<NewGoodsBean> list) {
+        
     }
 
     static class FooterViewHolder extends RecyclerView.ViewHolder {
