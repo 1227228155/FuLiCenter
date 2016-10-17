@@ -1,10 +1,8 @@
 package cn.ucai.fulicenter.Activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceActivity;
 
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.utils.MFGT;
