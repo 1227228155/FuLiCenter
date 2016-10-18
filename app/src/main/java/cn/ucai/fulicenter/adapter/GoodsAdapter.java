@@ -25,7 +25,16 @@ import cn.ucai.fulicenter.utils.ImageLoader;
 public class GoodsAdapter extends RecyclerView.Adapter {
     Context mContext;
     List<NewGoodsBean> mList;
-    Boolean isMore;
+    boolean isMore;
+
+    public GoodsAdapter(Boolean isMore) {
+        this.isMore = isMore;
+    }
+    public  boolean isMore(){
+        return  isMore;
+    }
+
+
 
     public Boolean getMore() {
         return isMore;
@@ -88,8 +97,13 @@ public class GoodsAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public int getFootString() {
 
+    public void addData(ArrayList<NewGoodsBean> list) {
+        mList.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    private int getFootString() {
         return isMore?R.string.load_more:R.string.no_more;
     }
 
