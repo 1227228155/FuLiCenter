@@ -15,8 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.ucai.fulicenter.Activity.GoodsDetailActivity;
-import cn.ucai.fulicenter.Activity.MainActivity;
+import cn.ucai.fulicenter.Activity.NewGoodsDetailActivity;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
@@ -139,7 +138,7 @@ public class GoodsAdapter extends RecyclerView.Adapter {
         @OnClick(R.id.NewGoodsly)
         public  void  onGoodsItemClick(){
             int mLayoutGoodsId = (int) mLayoutGoods.getTag();
-            mContext.startActivity(new Intent(mContext, GoodsDetailActivity.class).putExtra(I.GoodsDetails.KEY_GOODS_ID,
+            mContext.startActivity(new Intent(mContext, NewGoodsDetailActivity.class).putExtra(I.GoodsDetails.KEY_GOODS_ID,
                     mLayoutGoodsId));
         }
     }
