@@ -25,6 +25,16 @@ import cn.ucai.fulicenter.utils.ImageLoader;
 public class GoodsAdapter extends RecyclerView.Adapter {
     Context mContext;
     List<NewGoodsBean> mList;
+    Boolean isMore;
+
+    public Boolean getMore() {
+        return isMore;
+    }
+
+    public void setMore(Boolean more) {
+        isMore = more;
+        notifyDataSetChanged();
+    }
 
     public GoodsAdapter(Context mContext, List<NewGoodsBean> mList) {
         this.mContext = mContext;
@@ -45,6 +55,8 @@ public class GoodsAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position)==I.TYPE_FOOTER){
+            FooterViewHolder vh = (FooterViewHolder) holder;
+            vh.Footer.setText(getFootString());
 
         }else {
             GoodsViewHolder vh = (GoodsViewHolder) holder;
@@ -74,6 +86,11 @@ public class GoodsAdapter extends RecyclerView.Adapter {
         }
         mList.addAll(list);
         notifyDataSetChanged();
+    }
+
+    public int getFootString() {
+
+        return isMore?R.string.load_more:R.string.no_more;
     }
 
     static class FooterViewHolder extends RecyclerView.ViewHolder {

@@ -43,9 +43,11 @@ public class NewGoodsFragment extends Fragment {
     
     int pageID =1;
 
+
     public NewGoodsFragment() {
         // Required empty public constructor
     }
+
 
 
     @Override
@@ -67,9 +69,15 @@ public class NewGoodsFragment extends Fragment {
             public void onSuccess(NewGoodsBean[] result) {
                 srl.setRefreshing(false);
                 tvRfresh.setVisibility(View.GONE);
+                mAdapter.setMore(true);
                 if (result != null && result.length > 0) {
                     ArrayList<NewGoodsBean> list= ConvertUtils.array2List(result);
                     mAdapter.initData(list);
+                    if (list.size()<I.PAGE_SIZE_DEFAULT){
+                        mAdapter.setMore(false);
+                    }
+                }else {
+                    mAdapter.setMore(false);
                 }
 
             }
