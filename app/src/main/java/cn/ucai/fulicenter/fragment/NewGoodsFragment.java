@@ -26,6 +26,7 @@ import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.view.SpaceItemDecoration;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -159,6 +160,7 @@ public class NewGoodsFragment extends Fragment {
         rv.setLayoutManager(manager);
         rv.setHasFixedSize(true);
         rv.setAdapter(mAdapter);
+        rv.addItemDecoration(new SpaceItemDecoration(12));
     }
 
 
