@@ -1,10 +1,12 @@
 package cn.ucai.fulicenter.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -12,6 +14,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.ucai.fulicenter.Activity.GoodsDetailActivity;
 import cn.ucai.fulicenter.Activity.MainActivity;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
@@ -73,6 +77,7 @@ public class GoodsAdapter extends RecyclerView.Adapter {
             ImageLoader.downloadImg(mContext,vh.itemGoodsImageView,newGoodsBean.getGoodsThumb());
             vh.itemGoodsName.setText(newGoodsBean.getGoodsName());
             vh.itemGoodsPrice.setText(newGoodsBean.getCurrencyPrice());
+            vh.mLayoutGoods.setTag(newGoodsBean.getGoodsId());
         }
     }
 
@@ -117,17 +122,25 @@ public class GoodsAdapter extends RecyclerView.Adapter {
         }
     }
 
-    static class GoodsViewHolder extends RecyclerView.ViewHolder{
+     class GoodsViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.item_goods_imageView)
         ImageView itemGoodsImageView;
         @BindView(R.id.item_goods_name)
         TextView itemGoodsName;
         @BindView(R.id.item_goods_price)
         TextView itemGoodsPrice;
+        @BindView(R.id.NewGoodsly)
+        LinearLayout mLayoutGoods;
 
         GoodsViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+        @OnClick(R.id.NewGoodsly)
+        public  void  onGoodsItemClick(){
+            int mLayoutGoodsId = (int) mLayoutGoods.getTag();
+            mContext.startActivity(new Intent(mContext, GoodsDetailActivity.class).putExtra(I.GoodsDetails.KEY_GOODS_ID,
+                    mLayoutGoodsId));
         }
     }
 }
