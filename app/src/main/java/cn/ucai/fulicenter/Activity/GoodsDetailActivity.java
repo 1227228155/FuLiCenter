@@ -122,5 +122,9 @@ public class GoodsDetailActivity extends AppCompatActivity {
     public void onBackClick(){
         MFGT.finish(this);
     }
+    @Override
+    public  void  onBackPressed(){
+        MFGT.finish(this);
+    }
 
 }
