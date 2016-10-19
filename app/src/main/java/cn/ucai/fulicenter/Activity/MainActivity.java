@@ -33,7 +33,10 @@ public class MainActivity extends AppCompatActivity {
     int index;
 
     NewGoodsFragment ng;
+
+
     Fragment[] fragments;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
