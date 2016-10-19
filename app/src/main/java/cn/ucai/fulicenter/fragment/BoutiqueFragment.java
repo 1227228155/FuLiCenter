@@ -58,36 +58,46 @@ public class BoutiqueFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_goods, container, false);
         ButterKnife.bind(this, view);
         mContext = (MainActivity) getContext();
+        list = new ArrayList<>();
         mAdapter = new BoutiqueAdapter(mContext, list);
         initView();
         initData();
+        setListener();
         return view;
     }
 
-    private void initData() {
-        downloadBoutique(I.ACTION_DOWNLOAD);
+    private void setListener() {
+        setPullDownListener();
     }
 
-    private void downloadBoutique(final int action) {
+
+    private void setPullDownListener() {
+        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                srl.setRefreshing(true);
+                tvRfresh.setVisibility(View.VISIBLE);
+                 initData();
+            }
+
+
+        });
+    }
+
+    private void initData() {
+        downloadBoutique();
+    }
+
+    private void downloadBoutique() {
         NetDao.downloadBoutique(mContext, new OkHttpUtils.OnCompleteListener<BoutiqueBean[]>() {
             @Override
             public void onSuccess(BoutiqueBean[] result) {
                 srl.setRefreshing(false);
                 tvRfresh.setVisibility(View.GONE);
-                mAdapter.setMore(true);
                 if (result != null && result.length > 0) {
                     ArrayList<BoutiqueBean> list = ConvertUtils.array2List(result);
-                    if (action==I.ACTION_PULL_DOWN||action==I.ACTION_DOWNLOAD){
                         mAdapter.initData(list);
-                    }else {
-                        mAdapter.addData(list);
                     }
-                    if (list.size()<I.PAGE_SIZE_DEFAULT){
-                        mAdapter.setMore(false);
-                    }
-                }else {
-                    mAdapter.setMore(false);
-                }
             }
 
             @Override

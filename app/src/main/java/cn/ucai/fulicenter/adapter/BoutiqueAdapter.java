@@ -27,7 +27,6 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
     Context mContext;
     ArrayList<BoutiqueBean> mlist;
 
-    boolean isMore;
 
     public BoutiqueAdapter(Context mContext, ArrayList<BoutiqueBean> list) {
         this.mContext = mContext;
@@ -35,50 +34,28 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
         mlist.addAll(list);
     }
 
-    public boolean isMore() {
-        return isMore;
-    }
-
-    public void setMore(boolean more) {
-        isMore = more;
-        notifyDataSetChanged();
-    }
-
-    public BoutiqueAdapter(boolean isMore) {
-
-        this.isMore = isMore;
-    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder holder = null;
-        if (viewType == I.TYPE_FOOTER) {
-            holder = new FooterViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_footer, parent, false));
-        } else {
+        RecyclerView.ViewHolder
             holder = new BoutiqueViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_boutique, parent, false));
-        }
+
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof FooterViewHolder){
-            FooterViewHolder vh = (FooterViewHolder) holder;
-            vh.Footer.setText(getFootString());
-
-        }else {
             BoutiqueViewHolder bv = (BoutiqueViewHolder) holder;
             BoutiqueBean boutiqueBean =mlist.get(position);
             ImageLoader.downloadImg(mContext,bv.boutiqueImageView,boutiqueBean.getImageurl());
             bv.boutiqueTitle.setText(boutiqueBean.getTitle());
             bv.boutiqueName.setText(boutiqueBean.getName());
             bv.boutiqueName2.setText(boutiqueBean.getDescription());
-        }
     }
 
     @Override
     public int getItemCount() {
-        return mlist != null ? mlist.size() + 1 : 1;
+        return mlist != null ? mlist.size()  : 0;
     }
     public void initData(ArrayList<BoutiqueBean> list) {
         if (mlist!=null){
@@ -89,22 +66,8 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
     }
 
 
-    public void addData(ArrayList<BoutiqueBean> list) {
-        mlist.addAll(list);
-        notifyDataSetChanged();
-    }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (position == getItemCount() - 1) {
-            return I.TYPE_FOOTER;
-        }
-        return I.TYPE_ITEM;
-    }
 
-    private int getFootString() {
-        return isMore?R.string.load_more:R.string.no_more;
-    }
 
     class BoutiqueViewHolder  extends RecyclerView.ViewHolder{
         @BindView(R.id.boutique_imageView)

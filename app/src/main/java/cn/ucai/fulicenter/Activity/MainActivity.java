@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 index=4;
                 break;
         }
-        setRadioButtonStatus();
+        setFragment();
     }
     private void setFragment() {
         if (index != currentIndex) {
