@@ -17,6 +17,7 @@ import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.view.FooterViewHolder;
 
 /**
  * Created by Administrator on 2016/10/19 0019.
@@ -28,10 +29,10 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
 
     boolean isMore;
 
-    public BoutiqueAdapter(Context mContext, ArrayList<BoutiqueBean> mlist) {
+    public BoutiqueAdapter(Context mContext, ArrayList<BoutiqueBean> list) {
         this.mContext = mContext;
-        this.mlist = mlist;
-        mlist.addAll(mlist);
+        mlist = new ArrayList<>();
+        mlist.addAll(list);
     }
 
     public boolean isMore() {
@@ -40,6 +41,7 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
 
     public void setMore(boolean more) {
         isMore = more;
+        notifyDataSetChanged();
     }
 
     public BoutiqueAdapter(boolean isMore) {
@@ -51,7 +53,7 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder = null;
         if (viewType == I.TYPE_FOOTER) {
-            holder = new GoodsAdapter.FooterViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_footer, parent, false));
+            holder = new FooterViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_footer, parent, false));
         } else {
             holder = new BoutiqueViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_boutique, parent, false));
         }
@@ -60,8 +62,8 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (getItemViewType(position)==I.TYPE_FOOTER){
-            GoodsAdapter.FooterViewHolder vh = (GoodsAdapter.FooterViewHolder) holder;
+        if (holder instanceof FooterViewHolder){
+            FooterViewHolder vh = (FooterViewHolder) holder;
             vh.Footer.setText(getFootString());
 
         }else {
@@ -100,7 +102,7 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
         return I.TYPE_ITEM;
     }
 
-    public int getFootString() {
+    private int getFootString() {
         return isMore?R.string.load_more:R.string.no_more;
     }
 
