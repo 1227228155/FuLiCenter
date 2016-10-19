@@ -31,12 +31,11 @@ public class NetDao {
                     .execute(listener);
 
         }
-    public  static  void  downloadBoutique(Context context, int pageID, OkHttpUtils.OnCompleteListener<BoutiqueBean> listener){
-        OkHttpUtils<BoutiqueBean> utils = new OkHttpUtils(context);
-        utils.setRequestUrl(I.REQUEST_FIND_BOUTIQUES)
-                .addParam(I.Boutique.CAT_ID, String.valueOf(pageID))
-                .targetClass(BoutiqueBean.class)
-                .execute(listener);
-    }
+   public  static  void  downloadBoutique(Context context, OkHttpUtils.OnCompleteListener<BoutiqueBean[]> listener){
+       OkHttpUtils utils = new OkHttpUtils(context);
+       utils.setRequestUrl(I.REQUEST_FIND_BOUTIQUES)
+               .targetClass(BoutiqueBean[].class)
+               .execute(listener);
+   }
 
 }

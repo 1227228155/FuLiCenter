@@ -12,6 +12,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.fragment.BoutiqueFragment;
 import cn.ucai.fulicenter.fragment.NewGoodsFragment;
 
 
@@ -33,9 +34,11 @@ public class MainActivity extends AppCompatActivity {
     int index;
 
     NewGoodsFragment ng;
-
+    BoutiqueFragment bf;
 
     Fragment[] fragments;
+
+    int currentIndex;
 
 
     @Override
@@ -51,9 +54,14 @@ public class MainActivity extends AppCompatActivity {
     private void initfragment() {
         fragments = new Fragment[5];
         ng = new NewGoodsFragment();
+        bf = new BoutiqueFragment();
+        fragments[0] = ng;
+        fragments[1] = bf;
         FragmentManager manager=getSupportFragmentManager();
         FragmentTransaction transaction=manager.beginTransaction();
         transaction.add(R.id.rl, ng)
+                .add(R.id.rl,bf)
+                .hide(bf)
                 .show(ng)
                 .commit();
 
@@ -89,6 +97,18 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         setRadioButtonStatus();
+    }
+    private void setFragment() {
+        if (index != currentIndex) {
+            FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
+            ft.hide(fragments[currentIndex]);
+            if (!fragments[index].isAdded()) {
+                ft.add(R.id.rl, fragments[index]);
+            }
+            ft.show(fragments[index]).commit();
+        }
+        setRadioButtonStatus();
+        currentIndex=index;
     }
 
     private void setRadioButtonStatus() {
