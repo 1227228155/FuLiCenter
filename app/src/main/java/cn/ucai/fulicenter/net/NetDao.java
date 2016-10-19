@@ -13,10 +13,10 @@ import cn.ucai.fulicenter.bean.NewGoodsBean;
  */
 
 public class NetDao {
-    public static void downloadNewGoods(Context context, int pageID, OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener){
+    public static void downloadNewGoods(Context context,int catID, int pageID, OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener){
         OkHttpUtils utils = new OkHttpUtils(context);
         utils.setRequestUrl(I.REQUEST_FIND_NEW_BOUTIQUE_GOODS)
-                .addParam(I.NewAndBoutiqueGoods.CAT_ID,String.valueOf(I.CAT_ID))
+                .addParam(I.NewAndBoutiqueGoods.CAT_ID,String.valueOf(catID))
                 .addParam(I.PAGE_ID,String.valueOf(pageID))
                 .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
                 .targetClass(NewGoodsBean[].class)
