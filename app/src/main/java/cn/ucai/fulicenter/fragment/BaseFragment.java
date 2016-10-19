@@ -2,6 +2,7 @@ package cn.ucai.fulicenter.fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,19 +16,13 @@ import cn.ucai.fulicenter.R;
 public  abstract class BaseFragment extends Fragment {
 
 
-    public BaseFragment() {
-        // Required empty public constructor
-    }
-
-
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         initView();
         initData();
         setListener();
-        return inflater.inflate(R.layout.fragment_base, container, false);
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     protected abstract void setListener();

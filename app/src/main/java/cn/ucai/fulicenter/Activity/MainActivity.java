@@ -16,7 +16,7 @@ import cn.ucai.fulicenter.fragment.BoutiqueFragment;
 import cn.ucai.fulicenter.fragment.NewGoodsFragment;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     @BindView(R.id.rbGoodNews)
     RadioButton mrbGoodNews;
     @BindView(R.id.rbBoutique)
@@ -43,15 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        initView();
-        initfragment();
-
+        super.onCreate(savedInstanceState);
     }
 
-    private void initfragment() {
+    public void initFragment() {
         fragments = new Fragment[5];
         ng = new NewGoodsFragment();
         bf = new BoutiqueFragment();
@@ -64,10 +61,10 @@ public class MainActivity extends AppCompatActivity {
                 .hide(bf)
                 .show(ng)
                 .commit();
-
     }
 
-    private void initView() {
+    @Override
+    protected  void initView() {
         rbs = new RadioButton[5];
         rbs[0]=mrbGoodNews;
         rbs[1]=mrbBoutique;
@@ -75,6 +72,16 @@ public class MainActivity extends AppCompatActivity {
         rbs[3]=mrbCart;
         rbs[4]=mrbContact;
 
+
+    }
+
+    @Override
+    protected void initData() {
+        initFragment();
+    }
+
+    @Override
+    protected void setListener() {
 
     }
 

@@ -46,9 +46,6 @@ public class BoutiqueFragment extends BaseFragment {
     BoutiqueAdapter mAdapter;
     ArrayList<BoutiqueBean> list;
 
-    public BoutiqueFragment() {
-        // Required empty public constructor
-    }
 
 
     @Override
@@ -75,7 +72,7 @@ public class BoutiqueFragment extends BaseFragment {
             public void onRefresh() {
                 srl.setRefreshing(true);
                 tvRfresh.setVisibility(View.VISIBLE);
-                 initData();
+                downloadBoutique();
             }
 
 

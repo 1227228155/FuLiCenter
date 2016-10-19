@@ -21,7 +21,7 @@ import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.view.FlowIndicator;
 import cn.ucai.fulicenter.view.SlideAutoLoopView;
 
-public class GoodsDetailActivity extends AppCompatActivity {
+public class GoodsDetailActivity extends BaseActivity {
     int goodsId;
     GoodsDetailActivity mContext;
     @BindView(R.id.backClickArea)
@@ -43,34 +43,30 @@ public class GoodsDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
         ButterKnife.bind(this);
         goodsId = getIntent().getIntExtra(I.GoodsDetails.KEY_GOODS_ID, 0);
-        L.e("details", "goodsid" + goodsId);
         if (goodsId == 0) {
-            L.e("ccccccccccccccccccccccccc");
             finish();
         }
-        initView();
-        initData();
-        setListener();
-    }
-
-    private void setListener() {
+        mContext=this;
+        super.onCreate(savedInstanceState);
 
     }
 
-    private void initData() {
+    @Override
+    protected void setListener() {
+
+    }
+
+    @Override
+    protected void initData() {
         NetDao.downloadGoodsDetail(mContext, goodsId, new OkHttpUtils.OnCompleteListener<GoodsDetailsBean>() {
             @Override
             public void onSuccess(GoodsDetailsBean result) {
-                L.e("qqqqqqqq"+goodsId);
-                L.i("details=" + result);
                 if (result != null) {
                     showGoodDetails(result);
                 } else {
-                    L.e("wocaonime cccccccccccccccc");
                     finish();
                 }
             }
@@ -114,7 +110,8 @@ public class GoodsDetailActivity extends AppCompatActivity {
         return urls;
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
 
 
     }
