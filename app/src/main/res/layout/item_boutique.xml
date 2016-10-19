@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="#36f00000"
     >
 <ImageView
     android:id="@+id/boutique_imageView"
     android:layout_width="200dp"
-    android:layout_height="200dp"
+    android:layout_height="250dp"
     />
     <LinearLayout
         android:id="@+id/boutique_linearLayout"
@@ -19,16 +20,17 @@
             android:id="@+id/boutique_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
+            android:textSize="18sp"
             android:layout_marginLeft="30dp"
             android:text="标题"
             android:layout_marginTop="30dp"
+            android:textColor="#f36"
             />
         <TextView
             android:id="@+id/boutique_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
+            android:textSize="18sp"
             android:text="名字"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
@@ -38,11 +40,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="内容"
-            android:textSize="30sp"
+            android:textSize="18sp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             />
 
     </LinearLayout>
+
+
 
 </LinearLayout>
