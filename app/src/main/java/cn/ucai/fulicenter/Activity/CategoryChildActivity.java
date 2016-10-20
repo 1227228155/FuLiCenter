@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,16 +46,26 @@ public class CategoryChildActivity extends BaseActivity {
     @BindView(R.id.activity_category_child)
     LinearLayout activityCategoryChild;
 
+    boolean addTimeAsc;
+    boolean priceAsc;
+
+    int sortBy =I.SORT_BY_ADDTIME_DESC;
+
     int catID;
+    @BindView(R.id.btn_sort_price)
+    Button btnSortPrice;
+    @BindView(R.id.btn_sort_addtime)
+    Button btnSortAddtime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_category_child);
         ButterKnife.bind(this);
-        mContext=this;
-        mlist= new ArrayList<>();
-        mAdapter = new GoodsAdapter(mContext,mlist);
-       catID = getIntent().getIntExtra(I.CategoryChild.CAT_ID,0);
-        if (catID==0){
+        mContext = this;
+        mlist = new ArrayList<>();
+        mAdapter = new GoodsAdapter(mContext, mlist);
+        catID = getIntent().getIntExtra(I.CategoryChild.CAT_ID, 0);
+        if (catID == 0) {
             finish();
         }
         super.onCreate(savedInstanceState);
@@ -80,12 +91,14 @@ public class CategoryChildActivity extends BaseActivity {
     protected void initData() {
         downloadCategoryGoods(I.ACTION_DOWNLOAD);
     }
+
     @OnClick(R.id.backClickArea)
-    public void onCLick(){
+    public void onCLick() {
         MFGT.finish(this);
     }
+
     @Override
-    protected  void setListener() {
+    protected void setListener() {
         setPullDownListener();
         setPullUoListener();
     }
@@ -96,9 +109,9 @@ public class CategoryChildActivity extends BaseActivity {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 int lastVisibleItemPosition = glm.findLastVisibleItemPosition();
-                if (newState==RecyclerView.SCROLL_STATE_IDLE
-                        &&lastVisibleItemPosition==mAdapter.getItemCount()-1
-                        && mAdapter.isMore()){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && lastVisibleItemPosition == mAdapter.getItemCount() - 1
+                        && mAdapter.isMore()) {
                     pageID++;
                     downloadCategoryGoods(I.ACTION_PULL_UP);
                 }
@@ -108,7 +121,7 @@ public class CategoryChildActivity extends BaseActivity {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int firstVisibleItemPosition = glm.findFirstVisibleItemPosition();
-                srl.setEnabled(firstVisibleItemPosition==0);
+                srl.setEnabled(firstVisibleItemPosition == 0);
             }
         });
     }
@@ -119,7 +132,7 @@ public class CategoryChildActivity extends BaseActivity {
             public void onRefresh() {
                 srl.setRefreshing(true);
                 tvRfresh.setVisibility(View.VISIBLE);
-                pageID=1;
+                pageID = 1;
                 downloadCategoryGoods(I.ACTION_PULL_DOWN);
             }
 
@@ -128,27 +141,26 @@ public class CategoryChildActivity extends BaseActivity {
     }
 
     private void downloadCategoryGoods(final int action) {
-        NetDao.downloadCategoryGoods(mContext,catID, pageID, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+        NetDao.downloadCategoryGoods(mContext, catID, pageID, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 srl.setRefreshing(false);
                 tvRfresh.setVisibility(View.GONE);
                 mAdapter.setMore(true);
                 if (result != null && result.length > 0) {
-                    ArrayList<NewGoodsBean> list= ConvertUtils.array2List(result);
-                    if (action==I.ACTION_PULL_DOWN||action==I.ACTION_DOWNLOAD){
+                    ArrayList<NewGoodsBean> list = ConvertUtils.array2List(result);
+                    if (action == I.ACTION_PULL_DOWN || action == I.ACTION_DOWNLOAD) {
                         mAdapter.initData(list);
-                    }else {
+                    } else {
                         mAdapter.addData(list);
                     }
-                    if (list.size()<I.PAGE_SIZE_DEFAULT){
+                    if (list.size() < I.PAGE_SIZE_DEFAULT) {
                         mAdapter.setMore(false);
                     }
-                }else {
+                } else {
                     mAdapter.setMore(false);
                 }
             }
-
 
 
             @Override
@@ -157,9 +169,32 @@ public class CategoryChildActivity extends BaseActivity {
                 tvRfresh.setVisibility(View.GONE);
                 mAdapter.setMore(false);
                 CommonUtils.showShortToast(error);
-                L.e("error"+error);
+                L.e("error" + error);
 
             }
         });
+    }
+
+    @OnClick({R.id.btn_sort_price, R.id.btn_sort_addtime})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_sort_price:
+                if (priceAsc){
+                    sortBy =I.SORT_BY_PRICE_ASC;
+                }else {
+                    sortBy =I.SORT_BY_PRICE_DESC;
+                }
+                priceAsc =!priceAsc;
+                break;
+            case R.id.btn_sort_addtime:
+                if (addTimeAsc){
+                    sortBy =I.SORT_BY_ADDTIME_ASC;
+                }else {
+                    sortBy =I.SORT_BY_ADDTIME_DESC;
+                }
+                addTimeAsc =!addTimeAsc;
+                break;
+        }
+        mAdapter.setSortBy(sortBy);
     }
 }

@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,6 +34,18 @@ public class GoodsAdapter extends RecyclerView.Adapter {
     List<NewGoodsBean> mList;
     boolean isMore;
 
+    public int getSortBy() {
+        return sortBy;
+    }
+
+    public void setSortBy(int sortBy) {
+        this.sortBy = sortBy;
+        sortBy();
+        notifyDataSetChanged();
+    }
+
+    int sortBy = I.SORT_BY_ADDTIME_DESC;
+
     public GoodsAdapter(Boolean isMore) {
         this.isMore = isMore;
     }
@@ -50,9 +64,10 @@ public class GoodsAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public GoodsAdapter(Context mContext, List<NewGoodsBean> mList) {
-        this.mContext = mContext;
-        this.mList = mList;
+    public GoodsAdapter(Context context, List<NewGoodsBean> list) {
+        mContext =context;
+        mList = new ArrayList<>();
+        mList.addAll(list);
     }
 
     @Override
@@ -133,5 +148,33 @@ public class GoodsAdapter extends RecyclerView.Adapter {
             int mLayoutGoodsId = (int) mLayoutGoods.getTag();
             MFGT.gotoGoodsDetails(mContext,mLayoutGoodsId);
         }
+    }
+
+    private void sortBy() {
+        Collections.sort(mList, new Comparator<NewGoodsBean>() {
+            @Override
+            public int compare(NewGoodsBean left, NewGoodsBean right) {
+                int result=0;
+                switch (sortBy){
+                    case I.SORT_BY_ADDTIME_ASC:
+                        result= (int) (Long.valueOf(left.getAddTime())-Long.valueOf(right.getAddTime()));
+                        break;
+                    case  I.SORT_BY_ADDTIME_DESC:
+                        result= (int) (Long.valueOf(right.getAddTime())-Long.valueOf(left.getAddTime()));
+                        break;
+                    case  I.SORT_BY_PRICE_ASC:
+                        result =getPrice(left.getCurrencyPrice())-getPrice(right.getCurrencyPrice());
+                        break;
+                    case  I.SORT_BY_PRICE_DESC:
+                        result =getPrice(right.getCurrencyPrice())-getPrice(left.getCurrencyPrice());
+                        break;
+                }
+                return result;
+            }
+            private int  getPrice(String price){
+                price =  price.substring(price.indexOf("￥")+1);
+                return Integer.valueOf(price);
+            }
+        });
     }
 }
