@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    >
+
+    <ImageView
+        android:id="@+id/group_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cart_hint"
+        android:layout_marginLeft="50dp"
+        />
+    <TextView
+        android:id="@+id/group_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="最IN"
+        android:layout_marginLeft="60dp"
+        />
+    <ImageView
+        android:id="@+id/group_iv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/arrow2_down"
+        android:layout_marginLeft="160dp"
+        />
+
+</LinearLayout>
