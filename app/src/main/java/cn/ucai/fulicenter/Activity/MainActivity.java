@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.fragment.BoutiqueFragment;
+import cn.ucai.fulicenter.fragment.CategoryFragment;
 import cn.ucai.fulicenter.fragment.NewGoodsFragment;
 
 
@@ -35,6 +36,7 @@ public class MainActivity extends BaseActivity {
 
     NewGoodsFragment ng;
     BoutiqueFragment bf;
+    CategoryFragment cf;
 
     Fragment[] fragments;
 
@@ -52,12 +54,16 @@ public class MainActivity extends BaseActivity {
         fragments = new Fragment[5];
         ng = new NewGoodsFragment();
         bf = new BoutiqueFragment();
+        cf = new CategoryFragment();
         fragments[0] = ng;
         fragments[1] = bf;
+        fragments[2] = cf;
         FragmentManager manager=getSupportFragmentManager();
         FragmentTransaction transaction=manager.beginTransaction();
         transaction.add(R.id.rl, ng)
                 .add(R.id.rl,bf)
+                .add(R.id.rl,cf)
+                .hide(cf)
                 .hide(bf)
                 .show(ng)
                 .commit();

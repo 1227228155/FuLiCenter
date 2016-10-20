@@ -18,6 +18,8 @@
         android:layout_height="wrap_content"
         android:text="最IN"
         android:layout_marginLeft="60dp"
+        android:gravity="center"
+        android:textSize="30dp"
         />
     <ImageView
         android:id="@+id/group_iv2"
