@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="40dp"
     android:background="@color/orange">
-    <LinearLayout
+   <LinearLayout
         android:id="@+id/backClickArea"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
@@ -19,7 +19,8 @@
         android:layout_width="match_parent"
         android:layout_centerVertical="true"
         android:layout_height="40dp"
-        android:layout_toRightOf="@+id/backClickArea">
+        android:layout_toRightOf="@+id/backClickArea"
+        android:layout_toEndOf="@+id/backClickArea">
         <TextView
             android:id="@+id/tvCommonTitle"
             android:layout_width="wrap_content"
