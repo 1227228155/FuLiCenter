@@ -81,8 +81,10 @@ public class CategoryFragment extends BaseFragment {
                 if (result!=null&&result.length>0){
                     ArrayList<CategoryGroupBean> GroupList= ConvertUtils.array2List(result);
                     mGroupList.addAll(GroupList);
-                    for (CategoryGroupBean g:GroupList){
-                        downloadChild(g.getId());
+                    for (int i=0;i<GroupList.size();i++){
+                        mChildList.add(new ArrayList<CategoryChildBean>());
+                        CategoryGroupBean g = GroupList.get(i);
+                        downloadChild(g.getId(),i);
                     }
                 }
             }
@@ -94,7 +96,7 @@ public class CategoryFragment extends BaseFragment {
         });
     }
 
-    private void downloadChild(int id) {
+    private void downloadChild(int id, final int index) {
         NetDao.downloadCategoryChild(mContext, id, new OkHttpUtils.OnCompleteListener<CategoryChildBean[]>() {
 
             @Override
@@ -102,7 +104,7 @@ public class CategoryFragment extends BaseFragment {
                 groupCount++;
                 if (result != null && result.length > 0) {
                     ArrayList<CategoryChildBean> childList = ConvertUtils.array2List(result);
-                    mChildList.add(childList);
+                    mChildList.set(index, childList);
                 }
                 if (groupCount==mGroupList.size()){
                     mAdapter.initData(mGroupList,mChildList);
