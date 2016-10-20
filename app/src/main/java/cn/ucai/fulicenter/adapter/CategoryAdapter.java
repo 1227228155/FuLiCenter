@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.CategoryChildBean;
 import cn.ucai.fulicenter.bean.CategoryGroupBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.MFGT;
 
 /**
  * Created by Administrator on 2016/10/20 0020.
@@ -103,10 +105,18 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
             view.getTag();
             holder= (ChildViewHolder) view.getTag();
         }
-        CategoryChildBean child = getChild(i,i1);
+        final CategoryChildBean child = getChild(i,i1);
         if (child!=null){
             ImageLoader.downloadImg(mContext,holder.childIv,child.getImageUrl());
             holder.childTv.setText(child.getName());
+            holder.mlinearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MFGT.gotoCategoryChildActivity(mContext,child.getId());
+                }
+            });
+
+
         }
         return view;
     }
@@ -147,6 +157,8 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         ImageView childIv;
         @BindView(R.id.child_tv)
         TextView childTv;
+        @BindView(R.id.ll)
+        LinearLayout mlinearLayout;
 
         ChildViewHolder(View view) {
             super(view);

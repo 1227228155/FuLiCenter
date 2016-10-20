@@ -21,7 +21,8 @@
         <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.GoodsDetailActivity" />
         <activity android:name=".Activity.BaseActivity" />
-        <activity android:name=".Activity.BoutiqueChildActivity"></activity>
+        <activity android:name=".Activity.BoutiqueChildActivity" />
+        <activity android:name=".Activity.CategoryChildActivity"></activity>
     </application>
 
 </manifest>

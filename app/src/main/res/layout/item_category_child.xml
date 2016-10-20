@@ -3,6 +3,7 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#f36"
+    android:id="@+id/ll"
     >
     <ImageView
         android:id="@+id/child_iv"
