@@ -12,6 +12,7 @@ import cn.ucai.fulicenter.Activity.GoodsDetailActivity;
 import cn.ucai.fulicenter.Activity.LoginActivity;
 import cn.ucai.fulicenter.Activity.MainActivity;
 
+import cn.ucai.fulicenter.Activity.RegisterActivity;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
@@ -56,8 +57,18 @@ public class MFGT {
         intent.putExtra(I.CategoryChild.ID,list);
         startActivity(context,intent);
     }
-    public  static  void gotoLogin(Context context){
+    public  static  void gotoLogin(Activity context){
         startActivity(context, LoginActivity.class);
 
+    }
+    public  static  void gotoRegister(Activity context){
+        Intent intent = new Intent();
+        intent.setClass(context, RegisterActivity.class);
+        startActivityForResult(context,intent,I.REQUEST_CODE_REGISTER);
+
+    }
+    public static  void startActivityForResult(Activity context,Intent intent,int requestCode){
+        context.startActivityForResult(intent,requestCode);
+        context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
     }
 }
