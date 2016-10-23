@@ -11,10 +11,12 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.fragment.BoutiqueFragment;
 import cn.ucai.fulicenter.fragment.CategoryFragment;
 import cn.ucai.fulicenter.fragment.NewGoodsFragment;
+import cn.ucai.fulicenter.utils.MFGT;
 
 
 public class MainActivity extends BaseActivity {
@@ -106,7 +108,11 @@ public class MainActivity extends BaseActivity {
                 index=3;
                 break;
             case R.id.rbContact:
-                index=4;
+                if (FuLiCenterApplication.getUsername()==null){
+                    MFGT.gotoLogin(this);
+                }else {
+                    index=4;
+                }
                 break;
         }
         setFragment();
