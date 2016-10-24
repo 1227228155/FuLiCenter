@@ -16,6 +16,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.fragment.BoutiqueFragment;
 import cn.ucai.fulicenter.fragment.CategoryFragment;
 import cn.ucai.fulicenter.fragment.NewGoodsFragment;
+import cn.ucai.fulicenter.fragment.PersonalCenterFragment;
 import cn.ucai.fulicenter.utils.MFGT;
 
 
@@ -39,6 +40,7 @@ public class MainActivity extends BaseActivity {
     NewGoodsFragment ng;
     BoutiqueFragment bf;
     CategoryFragment cf;
+    PersonalCenterFragment pf;
 
     Fragment[] fragments;
 
@@ -57,9 +59,11 @@ public class MainActivity extends BaseActivity {
         ng = new NewGoodsFragment();
         bf = new BoutiqueFragment();
         cf = new CategoryFragment();
+        pf = new PersonalCenterFragment();
         fragments[0] = ng;
         fragments[1] = bf;
         fragments[2] = cf;
+        fragments[4] = pf;
         FragmentManager manager=getSupportFragmentManager();
         FragmentTransaction transaction=manager.beginTransaction();
         transaction.add(R.id.rl, ng)
@@ -108,7 +112,7 @@ public class MainActivity extends BaseActivity {
                 index=3;
                 break;
             case R.id.rbContact:
-                if (FuLiCenterApplication.getUsername()==null){
+                if (FuLiCenterApplication.getUser()==null){
                     MFGT.gotoLogin(this);
                 }else {
                     index=4;
