@@ -13,4 +13,5 @@
     <string name="logining">login</string>
     <string name="login_fail_unknow_user">longin-fail,user</string>
     <string name="login_fail_error_password">login_fail,password</string>
+    <string name="user_database_error">error</string>
 </resources>
