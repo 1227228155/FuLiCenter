@@ -19,6 +19,7 @@ import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
+import cn.ucai.fulicenter.utils.ResultUtils;
 import cn.ucai.fulicenter.view.DisplayUtils;
 
 
@@ -88,10 +89,10 @@ public class LoginActivity extends BaseActivity {
         final ProgressDialog pd =new ProgressDialog(mContext);
         pd.setMessage(getResources().getString(R.string.logining));
         pd.show();
-        NetDao.login(mContext, username, password, new OkHttpUtils.OnCompleteListener<Result>() {
+        NetDao.login(mContext, username, password, new OkHttpUtils.OnCompleteListener<String>() {
             @Override
-            public void onSuccess(Result result) {
-                pd.dismiss();
+            public void onSuccess(String s) {
+               Result result = ResultUtils.getResultFromJson(s,User.class);
                 if (result==null){
                     CommonUtils.showLongToast(R.string.login_fail);
 
@@ -103,16 +104,14 @@ public class LoginActivity extends BaseActivity {
                     }else {
                         if (result.getRetCode()==I.MSG_LOGIN_UNKNOW_USER){
                             CommonUtils.showLongToast(R.string.login_fail_unknow_user);
-                            pd.dismiss();
                         }else if (result.getRetCode()==I.MSG_LOGIN_ERROR_PASSWORD){
                             CommonUtils.showLongToast(R.string.login_fail_error_password);
-                            pd.dismiss();
                         }else {
                             CommonUtils.showLongToast(R.string.login_fail);
-                            pd.dismiss();
                         }
                     }
                 }
+                pd.dismiss();
             }
 
             @Override
