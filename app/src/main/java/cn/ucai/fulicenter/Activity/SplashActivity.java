@@ -7,6 +7,7 @@ import android.os.Handler;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.User;
+import cn.ucai.fulicenter.dao.SharedPreferencesUtils;
 import cn.ucai.fulicenter.dao.UserDao;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
@@ -30,10 +31,14 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
                 User user = FuLiCenterApplication.getUser();
-                if (user==null){
+                String username =SharedPreferencesUtils.getInstance(mContext).getUser();
+                if (user==null&&username!=null){
                     UserDao dao = new UserDao(mContext);
-                     user = dao.getUser("aa1234");
+                    user = dao.getUser(username);
                     L.e(TAG,"user"+user);
+                    if (user!=null){
+                        FuLiCenterApplication.setUser(user);
+                    }
                 }
                 MFGT.gotoMainActivity(SplashActivity.this);
                 finish();

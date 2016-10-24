@@ -15,6 +15,7 @@ import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.User;
+import cn.ucai.fulicenter.dao.SharedPreferencesUtils;
 import cn.ucai.fulicenter.dao.UserDao;
 import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
@@ -105,6 +106,7 @@ public class LoginActivity extends BaseActivity {
                         UserDao dao = new UserDao(mContext);
                         boolean flag =dao.saveUser(user);
                         if (flag){
+                            SharedPreferencesUtils.getInstance(mContext).saveUser(user.getMuserName());
                             FuLiCenterApplication.setUser(user);
                             MFGT.finish(mContext);
                         }else {
