@@ -17,4 +17,6 @@
     <string name="update_fail">zz</string>
     <string name="update_nick_fail_unmodify">zz</string>
     <string name="update_user_nick">sd</string>
+    <string name="update_user_avatar_fail">zz</string>
+    <string name="update_user_avatar_success">qq</string>
 </resources>
