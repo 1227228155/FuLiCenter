@@ -86,7 +86,7 @@ public class NetDao {
         OkHttpUtils<String> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_UPDATE_USER_NICK)
                 .addParam(I.User.USER_NAME,username)
-                .addParam(I.User.PASSWORD, nick)
+                .addParam(I.User.NICK, nick)
                 .targetClass(String.class)
                 .execute(listener);
     }

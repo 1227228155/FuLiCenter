@@ -22,9 +22,12 @@
         <string name="register_fail_exists">用户名已经存在</string>
         <string name="login">登录</string>
         <string name="login_fail">登陆成功</string>
-        <string name="logining">login</string>
+        <string name="logining">刷新中</string>
         <string name="login_fail_unknow_user">登录失败，错误的用户名</string>
         <string name="login_fail_error_password">登录失败，密码错误</string>
         <string name="user_database_error">用户操作数据库异常</string>
+        <string name="update_fail">修改失败</string>
+        <string name="update_nick_fail_unmodify">昵称未修改</string>
+        <string name="update_user_nick">昵称修改成功</string>
 
 </resources>

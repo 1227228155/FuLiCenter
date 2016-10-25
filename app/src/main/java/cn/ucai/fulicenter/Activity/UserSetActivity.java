@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,9 +10,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.FuLiCenterApplication;
+import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.User;
 import cn.ucai.fulicenter.dao.SharedPreferencesUtils;
+import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.MFGT;
 
@@ -55,6 +58,19 @@ public class UserSetActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==RESULT_OK&&requestCode== I.REQUEST_CODE_NICK){
+            CommonUtils.showLongToast(R.string.update_user_nick);
+        }
+    }
 
     @OnClick({R.id.back, R.id.user_set_exit})
     public void onClick(View view) {

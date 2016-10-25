@@ -14,4 +14,7 @@
     <string name="login_fail_unknow_user">longin-fail,user</string>
     <string name="login_fail_error_password">login_fail,password</string>
     <string name="user_database_error">error</string>
+    <string name="update_fail">zz</string>
+    <string name="update_nick_fail_unmodify">zz</string>
+    <string name="update_user_nick">sd</string>
 </resources>

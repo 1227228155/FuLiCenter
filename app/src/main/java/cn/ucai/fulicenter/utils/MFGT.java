@@ -80,9 +80,7 @@ public class MFGT {
         startActivity(context,intent);
     }
     public static void gotoUpdateNick(Activity context){
-        Intent intent = new Intent();
-        intent.setClass(context, SetNickActivity.class);
-        startActivity(context,intent);
+        startActivityForResult(context,new Intent(context,SetNickActivity.class),I.REQUEST_CODE_NICK);
     }
 
 }

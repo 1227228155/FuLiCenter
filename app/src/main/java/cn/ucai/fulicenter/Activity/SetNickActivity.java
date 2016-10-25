@@ -48,8 +48,10 @@ public class SetNickActivity extends BaseActivity {
     protected void initData() {
         user = FuLiCenterApplication.getUser();
         if (user!=null){
-            nick =FuLiCenterApplication.getUser().getMuserNick().trim();
-            setEtNick.setText(nick);
+            setEtNick.setText(user.getMuserNick());
+            setEtNick.setSelectAllOnFocus(true);
+        }else {
+            finish();
         }
     }
 
@@ -65,55 +67,62 @@ public class SetNickActivity extends BaseActivity {
                 MFGT.finish(mContext);
                 break;
             case R.id.set_bt_save:
+                if (user!=null){
+                     nick =setEtNick.getText().toString().trim();
+                }
                 if (TextUtils.isEmpty(nick)){
                     CommonUtils.showLongToast(R.string.nick_name_connot_be_empty);
                 }else  if (nick.equals(user.getMuserNick())){
                     CommonUtils.showLongToast("昵称未修改");
                 }else {
-                    final ProgressDialog pd =new ProgressDialog(mContext);
-                    pd.setMessage(getResources().getString(R.string.logining));
-                    pd.show();
-                    NetDao.updateNick(mContext, user.getMuserName(), nick, new OkHttpUtils.OnCompleteListener<String>() {
-                        @Override
-                        public void onSuccess(String s) {
-                            Result result = ResultUtils.getResultFromJson(s,User.class);
-                            if (result==null){
-                                CommonUtils.showLongToast(R.string.login_fail);
-
-                            }else {
-                                if (result.isRetMsg()){
-                                    User user = (User) result.getRetData();
-                                    L.e("user"+user);
-                                    UserDao dao = new UserDao(mContext);
-                                    boolean flag =dao.saveUser(user);
-                                    if (flag){
-                                        SharedPreferencesUtils.getInstance(mContext).saveUser(user.getMuserName());
-                                        FuLiCenterApplication.setUser(user);
-                                        MFGT.finish(mContext);
-                                    }else {
-                                        CommonUtils.showLongToast(R.string.user_database_error);
-                                    }
-                                }else {
-                                    if (result.getRetCode()==I.MSG_LOGIN_UNKNOW_USER){
-                                        CommonUtils.showLongToast(R.string.login_fail_unknow_user);
-                                    }else if (result.getRetCode()==I.MSG_LOGIN_ERROR_PASSWORD){
-                                        CommonUtils.showLongToast(R.string.login_fail_error_password);
-                                    }else {
-                                        CommonUtils.showLongToast(R.string.login_fail);
-                                    }
-                                }
-                            }
-                            pd.dismiss();
-                        }
-
-
-                        @Override
-                    public void onError(String error) {
-                        CommonUtils.showLongToast(error);
-                    }
-                    });
+                       updateNick(nick);
                 }
                 break;
         }
+    }
+
+    private void updateNick(String nick) {
+        final ProgressDialog pd =new ProgressDialog(mContext);
+        pd.setMessage(getResources().getString(R.string.logining));
+        pd.show();
+        NetDao.updateNick(mContext, user.getMuserName(), nick, new OkHttpUtils.OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                Result result = ResultUtils.getResultFromJson(s,User.class);
+                if (result==null){
+                    CommonUtils.showLongToast(R.string.login_fail);
+
+                }else {
+                    if (result.isRetMsg()){
+                        User u = (User) result.getRetData();
+                        L.e("user"+user);
+                        UserDao dao = new UserDao(mContext);
+                        boolean flag =dao.saveUser(u);
+                        if (flag){
+                            FuLiCenterApplication.setUser(u);
+                            setResult(RESULT_OK);
+                            MFGT.finish(mContext);
+                        }else {
+                            CommonUtils.showLongToast(R.string.user_database_error);
+                        }
+                    }else {
+                        if (result.getRetCode()==I.MSG_USER_SAME_NICK){
+                            CommonUtils.showLongToast(R.string.update_nick_fail_unmodify);
+                        }else if (result.getRetCode()==I.MSG_USER_UPDATE_NICK_FAIL){
+                            CommonUtils.showLongToast(R.string.update_fail);
+                        }else {
+                            CommonUtils.showLongToast(R.string.update_fail);
+                        }
+                    }
+                }
+                pd.dismiss();
+            }
+
+            @Override
+            public void onError(String error) {
+                pd.dismiss();
+                CommonUtils.showLongToast(error);
+            }
+        });
     }
 }
