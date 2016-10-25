@@ -61,7 +61,15 @@ public class PersonalCenterFragment extends BaseFragment {
         }
     }
 
-    @OnClick(R.id.tv_center_set)
+    @OnClick({R.id.tv_center_set,R.id.iv_user_avatar,R.id.tv_user_name,R.id.iv_user_erweima})
     public void onClick() {
+            MFGT.gotoUserSet(mContext);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+
     }
 }

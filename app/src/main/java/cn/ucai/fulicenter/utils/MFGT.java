@@ -13,6 +13,8 @@ import cn.ucai.fulicenter.Activity.LoginActivity;
 import cn.ucai.fulicenter.Activity.MainActivity;
 
 import cn.ucai.fulicenter.Activity.RegisterActivity;
+import cn.ucai.fulicenter.Activity.SetNickActivity;
+import cn.ucai.fulicenter.Activity.UserSetActivity;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
@@ -72,4 +74,15 @@ public class MFGT {
         context.startActivityForResult(intent,requestCode);
         context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
     }
+    public static void gotoUserSet(Activity context){
+        Intent intent = new Intent();
+        intent.setClass(context, UserSetActivity.class);
+        startActivity(context,intent);
+    }
+    public static void gotoUpdateNick(Activity context){
+        Intent intent = new Intent();
+        intent.setClass(context, SetNickActivity.class);
+        startActivity(context,intent);
+    }
+
 }

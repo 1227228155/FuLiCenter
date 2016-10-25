@@ -24,7 +24,9 @@
         <activity android:name=".Activity.BoutiqueChildActivity" />
         <activity android:name=".Activity.CategoryChildActivity" />
         <activity android:name=".Activity.LoginActivity" />
-        <activity android:name=".Activity.RegisterActivity"></activity>
+        <activity android:name=".Activity.RegisterActivity" />
+        <activity android:name=".Activity.UserSetActivity" />
+        <activity android:name=".Activity.SetNickActivity"></activity>
     </application>
 
 </manifest>

@@ -48,6 +48,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void initView() {
         DisplayUtils.initBackWithTitle(this,"账户登录");
+
     }
 
     @Override
@@ -60,7 +61,7 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.bt_login, R.id.login_register})
+    @OnClick({R.id.bt_login, R.id.login_register,R.id.login_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_login:
@@ -69,7 +70,20 @@ public class LoginActivity extends BaseActivity {
             case R.id.login_register:
                 MFGT.gotoRegister(this);
                 break;
+            case R.id.login_back:
+                if (FuLiCenterApplication.getUsername()==null){
+                    MFGT.gotoMainActivity(mContext);
+                }
+                break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (FuLiCenterApplication.getUsername()==null){
+            MFGT.gotoMainActivity(mContext);
+        }
+        super.onBackPressed();
     }
 
     private void checkedInput() {
