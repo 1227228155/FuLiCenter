@@ -82,6 +82,9 @@ public class UserSetActivity extends BaseActivity {
         if (resultCode!=RESULT_OK){
             return;
         }
+        if (data==null){
+            return;
+        }
         mOnSetAavatarListener.setAvatar(requestCode,data,userSetAvatar);
         if (requestCode== I.REQUEST_CODE_NICK){
             CommonUtils.showLongToast(R.string.update_user_nick);
