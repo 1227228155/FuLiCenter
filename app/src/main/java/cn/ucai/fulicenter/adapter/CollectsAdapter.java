@@ -140,9 +140,9 @@ public class CollectsAdapter extends RecyclerView.Adapter {
             MFGT.gotoGoodsDetails(mContext,goods.getGoodsId());
 
         }
-  /*      @OnClick(R.id.iv_Collect_del)
+      @OnClick(R.id.iv_Collect_del)
         public void deleteCollect(){
-            final CollectBean goods= (CollectBean) btnNewGoods.getTag();
+            final CollectBean goods= (CollectBean) mLayoutGoods.getTag();
             String username= FuLiCenterApplication.getUser().getMuserName();
             NetDao.deleteCollect(mContext, username, goods.getGoodsId(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
                 @Override
@@ -164,7 +164,7 @@ public class CollectsAdapter extends RecyclerView.Adapter {
 
                 }
             });
-        }*/
+        }
     }
 
 }
