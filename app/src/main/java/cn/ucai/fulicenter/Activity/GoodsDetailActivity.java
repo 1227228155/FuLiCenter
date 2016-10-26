@@ -1,18 +1,21 @@
 package cn.ucai.fulicenter.Activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.AlbumsBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
+import cn.ucai.fulicenter.bean.MessageBean;
+import cn.ucai.fulicenter.bean.User;
 import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
@@ -40,6 +43,9 @@ public class GoodsDetailActivity extends BaseActivity {
     FlowIndicator indicator;
     @BindView(R.id.goodbref)
     WebView wvgoodbrief;
+    boolean isCollected;
+    @BindView(R.id.ivcollect)
+    ImageView ivcollect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +55,7 @@ public class GoodsDetailActivity extends BaseActivity {
         if (goodsId == 0) {
             finish();
         }
-        mContext=this;
+        mContext = this;
         super.onCreate(savedInstanceState);
 
     }
@@ -85,8 +91,8 @@ public class GoodsDetailActivity extends BaseActivity {
         tvgoodname.setText(details.getGoodsName());
         tvgoodpricecurrent.setText(details.getCurrencyPrice());
         tvgoodpriceshop.setText(details.getShopPrice());
-        salv.startPlayLoop(indicator,getAlbumImgUrl(details),getAlbumImgCount(details));
-        wvgoodbrief.loadDataWithBaseURL(null,details.getGoodsBrief(),I.TEXT_HTML,I.UTF_8,null);
+        salv.startPlayLoop(indicator, getAlbumImgUrl(details), getAlbumImgCount(details));
+        wvgoodbrief.loadDataWithBaseURL(null, details.getGoodsBrief(), I.TEXT_HTML, I.UTF_8, null);
     }
 
     private int getAlbumImgCount(GoodsDetailsBean details) {
@@ -99,9 +105,9 @@ public class GoodsDetailActivity extends BaseActivity {
     private String[] getAlbumImgUrl(GoodsDetailsBean details) {
         String[] urls = new String[]{};
         if (details.getProperties() != null && details.getProperties().length > 0) {
-            AlbumsBean[] albums=details.getProperties()[0].getAlbums();
+            AlbumsBean[] albums = details.getProperties()[0].getAlbums();
             urls = new String[albums.length];
-            for (int i=0;i<albums.length;i++) {
+            for (int i = 0; i < albums.length; i++) {
                 urls[i] = albums[i].getImgUrl();
             }
 
@@ -115,13 +121,52 @@ public class GoodsDetailActivity extends BaseActivity {
 
 
     }
+
     @OnClick(R.id.backClickArea)
-    public void onBackClick(){
+    public void onBackClick() {
         MFGT.finish(this);
     }
+
     @Override
-    public  void  onBackPressed(){
+    public void onBackPressed() {
         MFGT.finish(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isCollected();
+    }
+
+    public void isCollected() {
+        User user = FuLiCenterApplication.getUser();
+        if (user != null) {
+            NetDao.isCollected(mContext, user.getMuserName(), goodsId, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                @Override
+                public void onSuccess(MessageBean result) {
+                    if (result != null && result.isSuccess()) {
+                        isCollected = true;
+                    }else {
+                        isCollected=false;
+                    }
+                    updateGoodsCollectStatus();
+                }
+
+                @Override
+                public void onError(String error) {
+                    updateGoodsCollectStatus();
+                }
+            });
+        }
+        updateGoodsCollectStatus();
+    }
+
+    private void updateGoodsCollectStatus() {
+        if (isCollected) {
+            ivcollect.setImageResource(R.mipmap.bg_collect_out);
+        }else {
+            ivcollect.setImageResource(R.mipmap.bg_collect_in);
+        }
     }
 
 }
