@@ -1,11 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_collects"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eff2f6"
     android:orientation="vertical"
-    android:background="#fff"
-    tools:context="cn.ucai.fulicenter.fragment.NewGoodsFragment">
-    <include layout="@layout/common_head_title"/>
+    >
+    <LinearLayout
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back_press"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收藏的宝贝"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            android:paddingLeft="120dp"
+            />
+    </LinearLayout>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl"
         android:layout_width="match_parent"
@@ -22,12 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-
             </android.support.v7.widget.RecyclerView>
-
         </LinearLayout>
-
     </android.support.v4.widget.SwipeRefreshLayout>
-
-
 </LinearLayout>

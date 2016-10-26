@@ -26,7 +26,8 @@
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.RegisterActivity" />
         <activity android:name=".Activity.UserSetActivity" />
-        <activity android:name=".Activity.SetNickActivity"></activity>
+        <activity android:name=".Activity.SetNickActivity" />
+        <activity android:name=".Activity.CollectsActivity"></activity>
     </application>
 
 </manifest>

@@ -31,5 +31,6 @@
         <string name="update_user_nick">昵称修改成功</string>
         <string name="update_user_avatar_fail">头像上传失败</string>
         <string name="update_user_avatar_success">头像修改成功</string>
+        <string name="delete_collect_fail">收藏失败</string>
 
 </resources>

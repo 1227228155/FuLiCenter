@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import cn.ucai.fulicenter.Activity.BoutiqueChildActivity;
 import cn.ucai.fulicenter.Activity.CategoryChildActivity;
+import cn.ucai.fulicenter.Activity.CollectsActivity;
 import cn.ucai.fulicenter.Activity.GoodsDetailActivity;
 import cn.ucai.fulicenter.Activity.LoginActivity;
 import cn.ucai.fulicenter.Activity.MainActivity;
@@ -81,6 +82,9 @@ public class MFGT {
     }
     public static void gotoUpdateNick(Activity context){
         startActivityForResult(context,new Intent(context,SetNickActivity.class),I.REQUEST_CODE_NICK);
+    }
+    public static void gotoCollects(Activity context){
+        startActivity(context, CollectsActivity.class);
     }
 
 }

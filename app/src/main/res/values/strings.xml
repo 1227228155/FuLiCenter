@@ -19,4 +19,5 @@
     <string name="update_user_nick">sd</string>
     <string name="update_user_avatar_fail">zz</string>
     <string name="update_user_avatar_success">qq</string>
+    <string name="delete_collect_fail">zz</string>
 </resources>
