@@ -156,4 +156,13 @@ public class NetDao {
                 .execute(listener);
 
     }
+    public static void addCollected(Context context, String username, int goodsID, OkHttpUtils.OnCompleteListener<MessageBean> listener) {
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_ADD_COLLECT)
+                .addParam(I.Collect.USER_NAME, username)
+                .addParam(I.Collect.GOODS_ID, String.valueOf(goodsID))
+                .targetClass(MessageBean.class)
+                .execute(listener);
+
+    }
 }

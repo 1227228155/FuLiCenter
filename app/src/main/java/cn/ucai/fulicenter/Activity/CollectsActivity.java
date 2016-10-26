@@ -83,6 +83,12 @@ public class CollectsActivity extends BaseActivity {
         downloadCollects(I.ACTION_DOWNLOAD);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+    }
+
     private void downloadCollects(final int action) {
         NetDao.downloadCollects(mContext, user.getMuserName(), pageID, new OkHttpUtils.OnCompleteListener<CollectBean[]>() {
             @Override
