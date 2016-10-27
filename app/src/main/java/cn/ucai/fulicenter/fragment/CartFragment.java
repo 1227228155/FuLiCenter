@@ -161,16 +161,19 @@ public class CartFragment extends BaseFragment {
     private void sumPrice(){
         int sumPrice =0;
         int ranPrice =0;
+        int aa;
         if (mlist!=null&&mlist.size()>0){
             for (CartBean c:mlist){
                 if (c.isChecked()){
-                    sumPrice+=getPrice(c.getGoods().getCurrencyPrice())*c.getCount();
-                    ranPrice+=getPrice(c.getGoods().getRankPrice())*c.getCount();
+                    sumPrice +=getPrice(c.getGoods().getCurrencyPrice())*c.getCount();
+                    ranPrice +=getPrice(c.getGoods().getRankPrice())*c.getCount();
                 }
             }
-            cartSum.setText("合计  : ￥"+Double.valueOf(sumPrice));
-            cartSub.setText("节省  : ￥"+Double.valueOf(ranPrice));
+            aa=sumPrice-(sumPrice-ranPrice);
+            cartSum.setText("合计  : ￥"+Double.valueOf(aa));
+            cartSub.setText("节省  : ￥"+Double.valueOf(sumPrice-ranPrice));
         }else {
+         //   setCartLayout(false);
             cartSum.setText("合计  : ￥0");
             cartSub.setText("节省  : ￥0");
         }
@@ -184,6 +187,8 @@ public class CartFragment extends BaseFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             sumPrice();
+
+            setCartLayout(mlist!=null&&mlist.size()>0);
         }
     }
 

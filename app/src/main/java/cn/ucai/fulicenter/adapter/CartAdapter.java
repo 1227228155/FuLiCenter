@@ -15,10 +15,14 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.CartBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
+import cn.ucai.fulicenter.bean.MessageBean;
+import cn.ucai.fulicenter.net.NetDao;
+import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
 
 /**
@@ -69,7 +73,7 @@ public class CartAdapter extends RecyclerView.Adapter {
             cartViewHolder.cartPrice.setText(goodsDetailsBean.getCurrencyPrice());
         }
         cartViewHolder.cartCount.setText("(" + CartBean.getCount() + ")");
-        cartViewHolder.cartCheckbox.setChecked(false);
+        cartViewHolder.cartCheckbox.setChecked(CartBean.isChecked());
         cartViewHolder.cartCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -77,6 +81,7 @@ public class CartAdapter extends RecyclerView.Adapter {
                 mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATE_CART));
             }
         });
+        ((CartViewHolder) holder).cartAdd.setTag(position);
     }
 
 
@@ -111,11 +116,66 @@ public class CartAdapter extends RecyclerView.Adapter {
             super(view);
             ButterKnife.bind(this, view);
         }
-/*
-        @OnClick(R.id.boutique_linearLayout)
-        public void onBoutiqueClick() {
-            CartBean bean = (BoutiqueBean) boutiqueLinearLayout.getTag();
-            MFGT.gotoBoutiqueChildActivity(mContext, bean);
-        }*/
+        @OnClick(R.id.cart_add)
+        public void addCart(){
+           final int positon = (int) cartAdd.getTag();
+            CartBean cart =mList.get(positon);
+            NetDao.updateCart(mContext, cart.getId(), cart.getCount()+1, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                @Override
+                public void onSuccess(MessageBean result) {
+                    if (result!=null&&result.isSuccess()){
+                        mList.get(positon).setCount(mList.get(positon).getCount()+1);
+                        mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATE_CART));
+                        cartCount.setText("("+(mList.get(positon).getCount())+")");
+                    }
+
+                }
+
+                @Override
+                public void onError(String error) {
+
+                }
+            });
+
+        }
+        @OnClick(R.id.cart_del)
+        public void delCart(){
+            final int positon = (int) cartAdd.getTag();
+            CartBean cart =mList.get(positon);
+            if (cart.getCount()>1) {
+                NetDao.updateCart(mContext, cart.getId(), cart.getCount() - 1, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result != null && result.isSuccess()) {
+                            mList.get(positon).setCount(mList.get(positon).getCount() - 1);
+                            mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATE_CART));
+                            cartCount.setText("(" + (mList.get(positon).getCount()) + ")");
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
+            }else {
+                  NetDao.delCart(mContext, cart.getId(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                      @Override
+                      public void onSuccess(MessageBean result) {
+                          if (result != null && result.isSuccess()) {
+                              mList.remove(positon);
+                              mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATE_CART));
+                          }
+                      }
+
+                      @Override
+                      public void onError(String error) {
+
+                      }
+                  });
+            }
+
+        }
     }
 }
