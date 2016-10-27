@@ -1,5 +1,9 @@
 package cn.ucai.fulicenter.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.Activity.MainActivity;
 import cn.ucai.fulicenter.FuLiCenterApplication;
+import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.adapter.CartAdapter;
 import cn.ucai.fulicenter.bean.CartBean;
@@ -51,6 +56,8 @@ public class CartFragment extends BaseFragment {
     @BindView(R.id.cart_nothing)
     TextView cartNothing;
 
+    updateCartReceiver updateCartReceiver;
+
 
     @Nullable
     @Override
@@ -67,6 +74,9 @@ public class CartFragment extends BaseFragment {
     @Override
     protected void setListener() {
         setPullDownListener();
+        IntentFilter filter =new IntentFilter(I.BROADCAST_UPDATE_CART);
+        updateCartReceiver =new updateCartReceiver();
+        mContext.registerReceiver(updateCartReceiver, filter);
     }
 
     private void setPullDownListener() {
@@ -90,7 +100,9 @@ public class CartFragment extends BaseFragment {
                     srl.setRefreshing(false);
                     tvRfresh.setVisibility(View.GONE);
                     if (list != null && list.size() > 0) {
-                        mAdapter.initData(list);
+                        mlist.clear();
+                        mlist.addAll(list);
+                        mAdapter.initData(mlist);
                             setCartLayout(true);
                     } else {
                            setCartLayout(false);
@@ -143,6 +155,43 @@ public class CartFragment extends BaseFragment {
         rll.setVisibility(cartLayout ? View.VISIBLE : View.GONE);
         cartNothing.setVisibility(cartLayout ? View.GONE : View.VISIBLE);
         rv.setVisibility(cartLayout?View.VISIBLE:View.GONE);
+        sumPrice();
 
+    }
+    private void sumPrice(){
+        int sumPrice =0;
+        int ranPrice =0;
+        if (mlist!=null&&mlist.size()>0){
+            for (CartBean c:mlist){
+                if (c.isChecked()){
+                    sumPrice+=getPrice(c.getGoods().getCurrencyPrice())*c.getCount();
+                    ranPrice+=getPrice(c.getGoods().getRankPrice())*c.getCount();
+                }
+            }
+            cartSum.setText("合计  : ￥"+Double.valueOf(sumPrice));
+            cartSub.setText("节省  : ￥"+Double.valueOf(ranPrice));
+        }else {
+            cartSum.setText("合计  : ￥0");
+            cartSub.setText("节省  : ￥0");
+        }
+    }
+    private int  getPrice(String price){
+        price =  price.substring(price.indexOf("￥")+1);
+        return Integer.valueOf(price);
+    }
+    class updateCartReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            sumPrice();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (updateCartReceiver!=null){
+            mContext.unregisterReceiver(updateCartReceiver);
+        }
     }
 }

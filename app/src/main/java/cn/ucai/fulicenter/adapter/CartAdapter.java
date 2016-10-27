@@ -1,11 +1,13 @@
 package cn.ucai.fulicenter.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.CartBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
@@ -57,7 +60,7 @@ public class CartAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        CartBean CartBean = mList.get(position);
+        final CartBean CartBean = mList.get(position);
         GoodsDetailsBean goodsDetailsBean = CartBean.getGoods();
         CartViewHolder cartViewHolder = (CartViewHolder) holder;
         if (goodsDetailsBean != null) {
@@ -67,6 +70,13 @@ public class CartAdapter extends RecyclerView.Adapter {
         }
         cartViewHolder.cartCount.setText("(" + CartBean.getCount() + ")");
         cartViewHolder.cartCheckbox.setChecked(false);
+        cartViewHolder.cartCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                CartBean.setChecked(b);
+                mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATE_CART));
+            }
+        });
     }
 
 
@@ -76,10 +86,7 @@ public class CartAdapter extends RecyclerView.Adapter {
     }
 
     public void initData(ArrayList<CartBean> list) {
-        if (mList != null) {
-            mList.clear();
-        }
-        mList.addAll(list);
+        mList =list;
         notifyDataSetChanged();
     }
 
