@@ -16,6 +16,7 @@ import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.fragment.BoutiqueFragment;
+import cn.ucai.fulicenter.fragment.CartFragment;
 import cn.ucai.fulicenter.fragment.CategoryFragment;
 import cn.ucai.fulicenter.fragment.NewGoodsFragment;
 import cn.ucai.fulicenter.fragment.PersonalCenterFragment;
@@ -43,6 +44,7 @@ public class MainActivity extends BaseActivity {
     BoutiqueFragment bf;
     CategoryFragment cf;
     PersonalCenterFragment pf;
+    CartFragment cartFragment;
 
     Fragment[] fragments;
 
@@ -62,9 +64,11 @@ public class MainActivity extends BaseActivity {
         bf = new BoutiqueFragment();
         cf = new CategoryFragment();
         pf = new PersonalCenterFragment();
+        cartFragment = new CartFragment();
         fragments[0] = ng;
         fragments[1] = bf;
         fragments[2] = cf;
+        fragments[3] = cartFragment;
         fragments[4] = pf;
         FragmentManager manager=getSupportFragmentManager();
         FragmentTransaction transaction=manager.beginTransaction();
