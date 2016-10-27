@@ -8,23 +8,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.Activity.MainActivity;
 import cn.ucai.fulicenter.FuLiCenterApplication;
-import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.adapter.CartAdapter;
-import cn.ucai.fulicenter.bean.BoutiqueBean;
 import cn.ucai.fulicenter.bean.CartBean;
 import cn.ucai.fulicenter.bean.User;
 import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
-import cn.ucai.fulicenter.utils.ConvertUtils;
+import cn.ucai.fulicenter.utils.ResultUtils;
 import cn.ucai.fulicenter.view.SpaceItemDecoration;
 
 /**
@@ -42,6 +42,15 @@ public class CartFragment extends BaseFragment {
     RecyclerView rv;
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
+    @BindView(R.id.cart_sum)
+    TextView cartSum;
+    @BindView(R.id.cart_sub)
+    TextView cartSub;
+    @BindView(R.id.rll)
+    RelativeLayout rll;
+    @BindView(R.id.cart_nothing)
+    TextView cartNothing;
+
 
     @Nullable
     @Override
@@ -59,6 +68,7 @@ public class CartFragment extends BaseFragment {
     protected void setListener() {
         setPullDownListener();
     }
+
     private void setPullDownListener() {
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -67,29 +77,35 @@ public class CartFragment extends BaseFragment {
                 tvRfresh.setVisibility(View.VISIBLE);
                 downloadCart();
             }
-
-
         });
     }
 
     private void downloadCart() {
         User user = FuLiCenterApplication.getUser();
-        NetDao.findCart(mContext, user.getMuserName(), new OkHttpUtils.OnCompleteListener<CartBean[]>() {
-            @Override
-            public void onSuccess(CartBean[] result) {
-                srl.setRefreshing(false);
-                tvRfresh.setVisibility(View.GONE);
-                if (result != null && result.length > 0) {
-                    ArrayList<CartBean> list = ConvertUtils.array2List(result);
-                    mAdapter.initData(list);
+        if (user != null) {
+            NetDao.findCart(mContext, user.getMuserName(), new OkHttpUtils.OnCompleteListener<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    ArrayList<CartBean> list = ResultUtils.getCartFromJson(result);
+                    srl.setRefreshing(false);
+                    tvRfresh.setVisibility(View.GONE);
+                    if (list != null && list.size() > 0) {
+                        mAdapter.initData(list);
+                            setCartLayout(true);
+                    } else {
+                           setCartLayout(false);
+                    }
                 }
-            }
 
-            @Override
-            public void onError(String error) {
 
-            }
-        });
+                @Override
+                public void onError(String error) {
+                    tvRfresh.setVisibility(View.VISIBLE);
+                    srl.setRefreshing(false);
+                      setCartLayout(false);
+                }
+            });
+        }
     }
 
 
@@ -106,12 +122,27 @@ public class CartFragment extends BaseFragment {
         rv.setHasFixedSize(true);
         rv.setAdapter(mAdapter);
         rv.addItemDecoration(new SpaceItemDecoration(12));
+         setCartLayout(false);
 
-
-}
+    }
 
     @Override
     protected void initData() {
         downloadCart();
+    }
+
+    @OnClick(R.id.cart_buy)
+    public void onClick() {
+    }
+
+  /*  @OnClick(R.id.cart_buy)
+    public void onClick() {
+    }*/
+
+    public void setCartLayout(boolean cartLayout) {
+        rll.setVisibility(cartLayout ? View.VISIBLE : View.GONE);
+        cartNothing.setVisibility(cartLayout ? View.GONE : View.VISIBLE);
+        rv.setVisibility(cartLayout?View.VISIBLE:View.GONE);
+
     }
 }

@@ -1,8 +1,57 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eff2f6"
     tools:context="cn.ucai.fulicenter.fragment.NewGoodsFragment">
+    <RelativeLayout
+        android:id="@+id/rll"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/cart_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="合计：￥123"
+            android:textColor="#f63"
+            android:textSize="25sp"
+            android:layout_marginLeft="100dp"
+            />
+        <TextView
+            android:id="@+id/cart_sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="节省  : ￥100"
+            android:textColor="#f33"
+            android:textSize="25sp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="25dp"
+            />
+        <Button
+            android:id="@+id/cart_buy"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:text="购买"
+            android:background="#f63"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:textSize="30dp"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/cart_nothing"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="购物车空空如也~快去挑选心仪的宝贝吧！"
+        android:textColor="#f63"
+        android:textSize="20sp"
+        />
+
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl"
@@ -32,6 +81,11 @@
             </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
+
+
+
+
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</LinearLayout>
+
+</RelativeLayout>

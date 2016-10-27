@@ -86,5 +86,8 @@ public class MFGT {
     public static void gotoCollects(Activity context){
         startActivity(context, CollectsActivity.class);
     }
+    public static void loginFromCart(Activity context){
+        startActivityForResult(context,new Intent(context,LoginActivity.class),I.REQUEST_CODE_LOGIN_CART);
+    }
 
 }

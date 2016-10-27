@@ -7,21 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.bean.BoutiqueBean;
 import cn.ucai.fulicenter.bean.CartBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
-import cn.ucai.fulicenter.utils.MFGT;
 
 /**
  * Created by Administrator on 2016/10/19 0019.
@@ -29,7 +24,7 @@ import cn.ucai.fulicenter.utils.MFGT;
 
 public class CartAdapter extends RecyclerView.Adapter {
     Context mContext;
-    ArrayList<CartBean> mlist;
+    ArrayList<CartBean> mList;
     @BindView(R.id.cart_checkbox)
     CheckBox cartCheckbox;
     @BindView(R.id.cart_image)
@@ -46,9 +41,9 @@ public class CartAdapter extends RecyclerView.Adapter {
     TextView cartPrice;
 
 
-    public CartAdapter(Context mContext, ArrayList<CartBean> list) {
-        this.mContext = mContext;
-        this.mlist = list;
+    public CartAdapter(Context context, ArrayList<CartBean> list) {
+        mContext = context;
+        mList = list;
     }
 
 
@@ -62,29 +57,29 @@ public class CartAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        CartBean CartBean = mlist.get(position);
-        GoodsDetailsBean goodsDetailsBean =CartBean.getGoods();
+        CartBean CartBean = mList.get(position);
+        GoodsDetailsBean goodsDetailsBean = CartBean.getGoods();
         CartViewHolder cartViewHolder = (CartViewHolder) holder;
-        if (goodsDetailsBean!=null){
-            ImageLoader.downloadImg(mContext,cartViewHolder.cartImage,goodsDetailsBean.getGoodsThumb());
+        if (goodsDetailsBean != null) {
+            ImageLoader.downloadImg(mContext, cartViewHolder.cartImage, goodsDetailsBean.getGoodsThumb());
             cartViewHolder.cartName.setText(goodsDetailsBean.getGoodsName());
             cartViewHolder.cartPrice.setText(goodsDetailsBean.getCurrencyPrice());
         }
-        cartViewHolder.cartCount.setText("("+CartBean.getCount()+")");
+        cartViewHolder.cartCount.setText("(" + CartBean.getCount() + ")");
         cartViewHolder.cartCheckbox.setChecked(false);
     }
 
 
     @Override
     public int getItemCount() {
-        return mlist != null ? mlist.size() : 0;
+        return mList != null ? mList.size() : 0;
     }
 
     public void initData(ArrayList<CartBean> list) {
-        if (mlist != null) {
-            mlist.clear();
+        if (mList != null) {
+            mList.clear();
         }
-        mlist.addAll(list);
+        mList.addAll(list);
         notifyDataSetChanged();
     }
 

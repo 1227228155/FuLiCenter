@@ -9,15 +9,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/CustomCheckboxTheme"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="45dp"
         android:layout_marginLeft="10dp"
         />
     <ImageView
         android:id="@+id/cart_image"
         android:layout_width="40dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:src="@drawable/category_child"
         android:layout_marginLeft="50dp"
+        android:layout_marginTop="25dp"
         />
     <TextView
         android:id="@+id/cart_name"
@@ -27,6 +28,7 @@
         android:textSize="15sp"
         android:layout_toRightOf="@+id/cart_image"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
         android:textColor="#f63"
         />
     <LinearLayout
@@ -34,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="55dp"
         android:layout_marginLeft="10dp"
         >
         <ImageView
@@ -66,7 +68,7 @@
         android:text="￥456"
         android:textSize="20dp"
         android:layout_marginLeft="280dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="40dp"
         android:textColor="#f63"
         />
 

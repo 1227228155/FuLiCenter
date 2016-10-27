@@ -115,11 +115,15 @@ public class MainActivity extends BaseActivity {
                 index=2;
                 break;
             case R.id.rbCart:
-                index=3;
+                if (FuLiCenterApplication.getUser()==null){
+                    MFGT.loginFromCart(this);
+                }else {
+                    index=3;
+                }
                 break;
             case R.id.rbContact:
                 if (FuLiCenterApplication.getUser()==null){
-                    MFGT.gotoLogin(this);
+                   MFGT.gotoLogin(this);
                 }else {
                     index=4;
                 }
@@ -159,8 +163,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == I.REQUEST_CODE_LOGIN && FuLiCenterApplication.getUser() != null) {
-            index = 4;
+        if ( FuLiCenterApplication.getUser() != null) {
+          if (requestCode == I.REQUEST_CODE_LOGIN ){
+              index = 4;
+          }if (requestCode==I.REQUEST_CODE_LOGIN_CART){
+                index=3;
+            }
         }
     }
 }
