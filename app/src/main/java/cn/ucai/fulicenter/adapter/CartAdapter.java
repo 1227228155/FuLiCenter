@@ -24,6 +24,7 @@ import cn.ucai.fulicenter.bean.MessageBean;
 import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.MFGT;
 
 /**
  * Created by Administrator on 2016/10/19 0019.
@@ -61,6 +62,8 @@ public class CartAdapter extends RecyclerView.Adapter {
 
         return holder;
     }
+
+
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -138,6 +141,12 @@ public class CartAdapter extends RecyclerView.Adapter {
             });
 
         }
+        @OnClick({R.id.cart_image,R.id.cart_name,R.id.cart_price})
+        public void gotoDetail(){
+            final int positon = (int) cartAdd.getTag();
+            CartBean cart =mList.get(positon);
+            MFGT.gotoGoodsDetails(mContext,cart.getGoodsId());
+        }
         @OnClick(R.id.cart_del)
         public void delCart(){
             final int positon = (int) cartAdd.getTag();
@@ -178,4 +187,5 @@ public class CartAdapter extends RecyclerView.Adapter {
 
         }
     }
+
 }
