@@ -29,34 +29,42 @@ import cn.ucai.fulicenter.bean.CartBean;
 import cn.ucai.fulicenter.bean.User;
 import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
+import cn.ucai.fulicenter.utils.CommonUtils;
+import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.utils.ResultUtils;
 import cn.ucai.fulicenter.view.SpaceItemDecoration;
 
-/**
- * Created by Administrator on 2016/10/27 0027.
- */
 
 public class CartFragment extends BaseFragment {
+
+    /**
+     * Created by Administrator on 2016/10/27 0027.
+     */
+
     MainActivity mContext;
     ArrayList<CartBean> mlist;
     CartAdapter mAdapter;
     LinearLayoutManager llm;
+
+    updateCartReceiver updateCartReceiver;
+
+    String cartIds = null;
+    @BindView(R.id.tv_cart_sum_price)
+    TextView tvCartSumPrice;
+    @BindView(R.id.tv_cart_save_price)
+    TextView tvCartSavePrice;
+    @BindView(R.id.tv_cart_buy)
+    TextView tvCartBuy;
+    @BindView(R.id.LayoutCart)
+    RelativeLayout mLayoutCart;
     @BindView(R.id.tv_rfresh)
     TextView tvRfresh;
+    @BindView(R.id.tv_nothing)
+    TextView tvNothing;
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
-    @BindView(R.id.cart_sum)
-    TextView cartSum;
-    @BindView(R.id.cart_sub)
-    TextView cartSub;
-    @BindView(R.id.rll)
-    RelativeLayout rll;
-    @BindView(R.id.cart_nothing)
-    TextView cartNothing;
-
-    updateCartReceiver updateCartReceiver;
 
 
     @Nullable
@@ -74,8 +82,8 @@ public class CartFragment extends BaseFragment {
     @Override
     protected void setListener() {
         setPullDownListener();
-        IntentFilter filter =new IntentFilter(I.BROADCAST_UPDATE_CART);
-        updateCartReceiver =new updateCartReceiver();
+        IntentFilter filter = new IntentFilter(I.BROADCAST_UPDATE_CART);
+        updateCartReceiver = new updateCartReceiver();
         mContext.registerReceiver(updateCartReceiver, filter);
     }
 
@@ -103,9 +111,9 @@ public class CartFragment extends BaseFragment {
                         mlist.clear();
                         mlist.addAll(list);
                         mAdapter.initData(mlist);
-                            setCartLayout(true);
+                        setCartLayout(true);
                     } else {
-                           setCartLayout(false);
+                        setCartLayout(false);
                     }
                 }
 
@@ -114,7 +122,7 @@ public class CartFragment extends BaseFragment {
                 public void onError(String error) {
                     tvRfresh.setVisibility(View.VISIBLE);
                     srl.setRefreshing(false);
-                      setCartLayout(false);
+                    setCartLayout(false);
                 }
             });
         }
@@ -134,7 +142,7 @@ public class CartFragment extends BaseFragment {
         rv.setHasFixedSize(true);
         rv.setAdapter(mAdapter);
         rv.addItemDecoration(new SpaceItemDecoration(12));
-         setCartLayout(false);
+        setCartLayout(false);
 
     }
 
@@ -143,60 +151,72 @@ public class CartFragment extends BaseFragment {
         downloadCart();
     }
 
-    @OnClick(R.id.cart_buy)
+    @OnClick(R.id.tv_cart_buy)
     public void onClick() {
+        if (cartIds != null) {
+            MFGT.gotoBuy(mContext, cartIds);
+        } else {
+            CommonUtils.showLongToast(R.string.CART_NOTING);
+        }
+
     }
 
-  /*  @OnClick(R.id.cart_buy)
-    public void onClick() {
-    }*/
 
     public void setCartLayout(boolean cartLayout) {
-        rll.setVisibility(cartLayout ? View.VISIBLE : View.GONE);
-        cartNothing.setVisibility(cartLayout ? View.GONE : View.VISIBLE);
-        rv.setVisibility(cartLayout?View.VISIBLE:View.GONE);
+        mLayoutCart.setVisibility(cartLayout ? View.VISIBLE : View.GONE);
+       tvNothing.setVisibility(cartLayout ? View.GONE : View.VISIBLE);
+       rv.setVisibility(cartLayout ? View.VISIBLE : View.GONE);
         sumPrice();
 
     }
-    private void sumPrice(){
-        int sumPrice =0;
-        int ranPrice =0;
-        int aa;
-        if (mlist!=null&&mlist.size()>0){
-            for (CartBean c:mlist){
-                if (c.isChecked()){
-                    sumPrice +=getPrice(c.getGoods().getCurrencyPrice())*c.getCount();
-                    ranPrice +=getPrice(c.getGoods().getRankPrice())*c.getCount();
+
+    private void sumPrice() {
+        int sumPrice = 0;
+        int ranPrice = 0;
+        cartIds = null;
+        if (mlist != null && mlist.size() > 0) {
+            for (CartBean c : mlist) {
+                if (c.isChecked()) {
+                    cartIds += c.getId() + ",";
+                    sumPrice += getPrice(c.getGoods().getCurrencyPrice()) * c.getCount();
+                    ranPrice += getPrice(c.getGoods().getRankPrice()) * c.getCount();
                 }
             }
-            aa=sumPrice-(sumPrice-ranPrice);
-            cartSum.setText("合计  : ￥"+Double.valueOf(aa));
-            cartSub.setText("节省  : ￥"+Double.valueOf(sumPrice-ranPrice));
-        }else {
-         //   setCartLayout(false);
-            cartSum.setText("合计  : ￥0");
-            cartSub.setText("节省  : ￥0");
+            tvCartSumPrice.setText("合计  : ￥" + Double.valueOf(ranPrice));
+            tvCartSavePrice.setText("节省  : ￥" + Double.valueOf(sumPrice - ranPrice));
+        } else {
+            tvCartSumPrice.setText("合计  : ￥0");
+            tvCartSavePrice.setText("节省  : ￥0");
         }
     }
-    private int  getPrice(String price){
-        price =  price.substring(price.indexOf("￥")+1);
+
+    private int getPrice(String price) {
+        price = price.substring(price.indexOf("￥") + 1);
         return Integer.valueOf(price);
     }
-    class updateCartReceiver extends BroadcastReceiver{
+
+    class updateCartReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             sumPrice();
 
-            setCartLayout(mlist!=null&&mlist.size()>0);
+            setCartLayout(mlist != null && mlist.size() > 0);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (updateCartReceiver!=null){
+        if (updateCartReceiver != null) {
             mContext.unregisterReceiver(updateCartReceiver);
         }
     }
 }
+

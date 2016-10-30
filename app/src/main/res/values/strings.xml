@@ -20,4 +20,7 @@
     <string name="update_user_avatar_fail">zz</string>
     <string name="update_user_avatar_success">qq</string>
     <string name="delete_collect_fail">zz</string>
+    <string name="add_cart_success">zz</string>
+    <string name="add_cart_fial">qq</string>
+    <string name="CART_NOTING" />
 </resources>

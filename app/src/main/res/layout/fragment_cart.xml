@@ -1,91 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="#fff"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#eff2f6"
-    tools:context="cn.ucai.fulicenter.fragment.NewGoodsFragment">
+    android:layout_height="match_parent">
     <RelativeLayout
-        android:id="@+id/rll"
-        android:background="#fff"
+        android:id="@+id/LayoutCart"
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content">
+        android:layout_height="60dp"
+        android:layout_marginTop="580dp"
+        android:background="@color/white">
         <TextView
-            android:id="@+id/cart_sum"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/tv_cart_sum_price"
+            android:layout_toLeftOf="@+id/tv_cart_buy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:text="合计：￥0"
-            android:textColor="#f63"
-            android:textSize="25sp"
-            android:layout_marginLeft="100dp"
-            />
+            android:textColor="#f90"
+            android:textSize="18sp"/>
         <TextView
-            android:id="@+id/cart_sub"
+            android:id="@+id/tv_cart_save_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="节省  : ￥0"
-            android:textColor="#f33"
-            android:textSize="25sp"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="25dp"
-            />
-        <Button
-            android:id="@+id/cart_buy"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:text="购买"
-            android:background="#f63"
-            android:textColor="#fff"
-            android:gravity="center"
-            android:textSize="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/tv_cart_buy"
+            android:layout_below="@+id/tv_cart_sum_price"
+            android:textColor="@color/google_red"
+            android:text="节省：￥0"
+            android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/tv_cart_buy"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            />
-
+            android:background="#f63"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:gravity="center"
+            android:text="结算"
+            android:textSize="18sp"
+            android:textColor="#fff"/>
     </RelativeLayout>
-    <TextView
-        android:id="@+id/cart_nothing"
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="购物车空空如也~快去挑选心仪的宝贝吧！"
-        android:textColor="#f63"
-        android:textSize="20sp"
-        />
-
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl"
+        android:background="@color/list_background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+            <include layout="@layout/layout_refresh_title"/>
             <TextView
+                android:id="@+id/tv_nothing"
+                android:layout_marginTop="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_rfresh"
-                android:text="@string/now_refresh"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="购物车空空如也"
                 android:textSize="18sp"
-                android:gravity="center_horizontal"
-                android:textStyle="bold"
+                android:textColor="@color/orange" />
 
-                />
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
             </android.support.v7.widget.RecyclerView>
-
         </LinearLayout>
-
-
-
-
     </android.support.v4.widget.SwipeRefreshLayout>
-
 
 </RelativeLayout>

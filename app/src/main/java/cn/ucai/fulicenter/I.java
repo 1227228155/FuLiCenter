@@ -17,6 +17,7 @@ public interface I {
     int REQUEST_CODE_LOGIN=102;
     int REQUEST_CODE_NICK=103;
     int REQUEST_CODE_LOGIN_CART=104;
+    int REQUEST_CODE_LOGIN_GOODS =105;
 
     /** 表示列表项布局的两种类型*/
     int TYPE_ITEM=0;
@@ -55,6 +56,7 @@ public interface I {
     int CATEGORY_GOOD=1;
     int CAT_ID=0;
     String BROADCAST_UPDATE_CART = "cn.ucai.fulicenter.update.cart";
+
 
     interface Goods {
         String KEY_RESULT = "result";

@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import java.util.ArrayList;
 
+import cn.ucai.fulicenter.Activity.AddressActivity;
 import cn.ucai.fulicenter.Activity.BoutiqueChildActivity;
 import cn.ucai.fulicenter.Activity.CategoryChildActivity;
 import cn.ucai.fulicenter.Activity.CollectsActivity;
@@ -88,6 +89,10 @@ public class MFGT {
     }
     public static void loginFromCart(Activity context){
         startActivityForResult(context,new Intent(context,LoginActivity.class),I.REQUEST_CODE_LOGIN_CART);
+    }
+    public static void gotoBuy(Activity context,String cartID){
+        Intent intent =new Intent(context,AddressActivity.class).putExtra(I.Cart.ID,cartID);
+        startActivity(context,intent);
     }
 
 }
