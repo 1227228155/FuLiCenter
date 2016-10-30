@@ -55,7 +55,7 @@ public class CartFragment extends BaseFragment {
     TextView tvCartSavePrice;
     @BindView(R.id.tv_cart_buy)
     TextView tvCartBuy;
-    @BindView(R.id.LayoutCart)
+    @BindView(R.id.layout_cart)
     RelativeLayout mLayoutCart;
     @BindView(R.id.tv_rfresh)
     TextView tvRfresh;
@@ -149,6 +149,7 @@ public class CartFragment extends BaseFragment {
     @Override
     protected void initData() {
         downloadCart();
+        sumPrice();
     }
 
     @OnClick(R.id.tv_cart_buy)

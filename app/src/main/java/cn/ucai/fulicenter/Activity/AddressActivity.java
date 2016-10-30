@@ -57,7 +57,6 @@ public class AddressActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        DisplayUtils.initBackWithTitle(mContext,getString(R.string.confirm_order));
     }
 
     @Override

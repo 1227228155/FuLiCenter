@@ -65,7 +65,7 @@ public class CartAdapter extends Adapter<CartAdapter.CartViewHolder>  {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 cartBean.setChecked(b);
-                mContext.sendBroadcast(new Intent(I.REQUEST_UPDATE_CART));
+                mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATE_CART));
             }
         });
         holder.mIvCartAdd.setTag(position);

@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="#fff"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
-        android:id="@+id/LayoutCart"
+        android:id="@+id/layout_cart"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="580dp"
         android:background="@color/white">
         <TextView
             android:layout_centerHorizontal="true"
@@ -36,23 +35,20 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:background="#f63"
+            android:background="@color/main_orange"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:gravity="center"
             android:text="结算"
             android:textSize="18sp"
-            android:textColor="#fff"/>
+            android:textColor="@color/white"/>
     </RelativeLayout>
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl"
         android:background="@color/list_background"
+        android:layout_above="@id/layout_cart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,6 +56,7 @@
             <include layout="@layout/layout_refresh_title"/>
             <TextView
                 android:id="@+id/tv_nothing"
+                android:layout_below="@id/layout_cart"
                 android:layout_marginTop="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,10 +64,8 @@
                 android:text="购物车空空如也"
                 android:textSize="18sp"
                 android:textColor="@color/orange" />
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv"
-
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
