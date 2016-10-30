@@ -2,6 +2,7 @@ package cn.ucai.fulicenter.Activity;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
