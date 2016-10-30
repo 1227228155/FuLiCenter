@@ -35,5 +35,6 @@
         <string name="add_cart_success">添加购物车成功</string>
         <string name="add_cart_fial">添加购物车失败</string>
         <string name="CART_NOTING" >您还没有挑选任何宝贝~</string>
+        <string name="confirm_order">订单页面</string>
 
 </resources>

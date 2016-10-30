@@ -23,4 +23,5 @@
     <string name="add_cart_success">zz</string>
     <string name="add_cart_fial">qq</string>
     <string name="CART_NOTING" />
+    <string name="confirm_order">qq</string>
 </resources>

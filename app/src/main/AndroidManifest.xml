@@ -38,7 +38,7 @@
         <activity android:name=".Activity.RegisterActivity" />
         <activity android:name=".Activity.UserSetActivity" />
         <activity android:name=".Activity.SetNickActivity" />
-        <activity android:name=".Activity.CollectsActivity"></activity>
+        <activity android:name=".Activity.CollectsActivity" />
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -68,7 +68,7 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".Activity.AddressActivity"></activity>
+        <activity android:name=".Activity.AddressActivity" />
     </application>
 
 </manifest>

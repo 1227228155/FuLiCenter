@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.File;
 
+import cn.ucai.fulicenter.Activity.AddressActivity;
 import cn.ucai.fulicenter.Activity.GoodsDetailActivity;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
@@ -197,5 +198,13 @@ public class NetDao {
                         .addParam(I.Cart.IS_CHECKED,String.valueOf(0))
                         .targetClass(MessageBean.class)
                         .execute(listener);
+    }
+
+    public static void downloadCart(Context context,String username,OkHttpUtils.OnCompleteListener<String> listener){
+        OkHttpUtils<String> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_CARTS)
+                .addParam(I.Cart.USER_NAME,username)
+                .targetClass(String.class)
+                .execute(listener);
     }
 }
